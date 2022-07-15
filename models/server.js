@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const { dbConnection } = require('../database/config.db')
+
 
 
 class Server {
@@ -14,12 +16,17 @@ class Server {
         this.middlewares();
 
         //conectar a bd
-        //this.conectarDB();
+        
+        this.connectDB();
 
 
         //rutas para la aplicacion
         this.routes();
     }
+    //conectar a la base de datos
+    async connectDB(){
+        await dbConnection()
+    };
 
     middlewares(){
 
@@ -32,12 +39,8 @@ class Server {
         this.app.use(express.static('public'));
     }
 
-    async conectarDB() {
-        await dbConection();
-    }
-
     routes(){
-        this.app.use('/api/naves', require('../routes/spaceship'))
+        this.app.use('/api/spaceship', require('../routes/spaceship'))
         }
 
     listen(){
