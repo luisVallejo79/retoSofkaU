@@ -22,6 +22,14 @@ const spaceshipGetById = async(req = request, res = response) => {
         spaceship
     });
 }
+const spaceshipGetByName = async(req = request, res = response) => {
+
+    const { name } = req.params;
+    const spaceship = await TypespaceshipMongo.findOne(name)
+    res.json({
+        spaceship
+    });
+}
 const spaceshipPost = async(req, res = response) => {
     const body = req.body;
     let typeSpaceship = new TypeSpaceship(body);
@@ -48,10 +56,12 @@ const spaceshipPut = (req, res = response) => {
         msn : 'Put API controller'
     });
 };
-const spaceshipDelete = (req, res = response) => {
+const spaceshipDelete = async(req, res = response) => {
     const { id } = req.params;
+    const spaceship = await TypespaceshipMongo.findByIdAndRemove(id)
     res.json({
-        msn : 'Delete API controller'
+        msn:"Spaceship deleted",
+        spaceship
     });
 };
 
@@ -61,5 +71,6 @@ module.exports = {
     spaceshipPost,
     spaceshipPut,
     spaceshipDelete,
-    spaceshipGetById
+    spaceshipGetById,
+    spaceshipGetByName
 }

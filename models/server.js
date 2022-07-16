@@ -33,7 +33,7 @@ class Server {
         //leer datos que vienen del body
         this.app.use(express.json());
 
-        this.app.use( cors() );
+        this.app.use(cors());
 
         //direcctorio publico
         this.app.use(express.static('public'));
